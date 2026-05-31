@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   THEME TOKENS
+   Swap the whole palette by editing one block. The accent has a
+   light + dark value so contrast stays correct in both modes.
+   To try another color story, change the --accent* lines only.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+
+  /* dark — warm amber CRT phosphor on near-black */
+  --bg: oklch(0.158 0.009 70);
+  --surface: oklch(0.198 0.011 72);
+  --elevated: oklch(0.238 0.012 72);
+  --fg: oklch(0.93 0.012 80);
+  --muted: oklch(0.7 0.018 76);
+  --faint: oklch(0.52 0.018 74);
+  --line: oklch(0.318 0.012 72);
+  --line-soft: oklch(0.262 0.01 72);
+  --line-strong: oklch(0.42 0.016 73);
+
+  --accent: oklch(0.83 0.158 78);
+  --accent-dim: oklch(0.68 0.13 72);
+  --accent-deep: oklch(0.55 0.1 65);
+
+  --hatch: color-mix(in oklch, var(--line-strong) 16%, transparent);
+  --dot: color-mix(in oklch, var(--faint) 55%, transparent);
+
+  --col-w: 46rem;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* light — warm drafting paper, deep amber ink accents */
+  --bg: oklch(0.957 0.011 86);
+  --surface: oklch(0.928 0.013 84);
+  --elevated: oklch(0.898 0.015 84);
+  --fg: oklch(0.265 0.022 64);
+  --muted: oklch(0.44 0.022 62);
+  --faint: oklch(0.565 0.022 64);
+  --line: oklch(0.8 0.02 78);
+  --line-soft: oklch(0.865 0.015 80);
+  --line-strong: oklch(0.7 0.026 72);
+
+  --accent: oklch(0.585 0.155 58);
+  --accent-dim: oklch(0.52 0.135 54);
+  --accent-deep: oklch(0.42 0.1 48);
+
+  --hatch: color-mix(in oklch, var(--line-strong) 24%, transparent);
+  --dot: color-mix(in oklch, var(--faint) 42%, transparent);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-accent-deep: var(--accent-deep);
+
+  --font-display: var(--font-archivo), "Archivo", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-serif: var(--font-spectral), Georgia, serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-feature-settings: "ss01", "cv01";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: oklch(0.83 0.158 78 / 0.26);
+  color: var(--fg);
+}
+
+/* ---- terminal field textures (theme-aware via --hatch / --dot) ---- */
+
+.field-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 7px,
+    var(--hatch) 7px 8px
+  );
+}
+
+.field-dots {
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.4px);
+  background-size: 13px 13px;
+}
+
+/* CRT scanlines + phosphor bloom: dark mode only (no CRT on paper) */
+.crt-overlay {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    oklch(0 0 0 / 0) 0 2px,
+    oklch(0 0 0 / 0.16) 2px 3px
+  );
+}
+.crt-bloom {
+  background-image: radial-gradient(
+    62rem 30rem at 50% -8rem,
+    oklch(0.83 0.158 78 / 0.1),
+    transparent 70%
+  );
+}
+[data-theme="light"] .crt-overlay,
+[data-theme="light"] .crt-bloom {
+  opacity: 0 !important;
+}
+
+/* the iconic + seam marker */
+.crosshair {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background-image: linear-gradient(
+      var(--color-line-strong),
+      var(--color-line-strong)
+    ),
+    linear-gradient(var(--color-line-strong), var(--color-line-strong));
+  background-size: 9px 1px, 1px 9px;
+  background-position: center, center;
+  background-repeat: no-repeat;
+}
+.crosshair-accent {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent)),
+    linear-gradient(var(--color-accent), var(--color-accent));
+}
+
+/* ---- motion ---- */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+    opacity: 1;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* expandable rows: animate grid-template-rows, never height */
+.collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.collapsible[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.collapsible > div {
+  overflow: hidden;
+}
+
+/* ---- theme swap via View Transitions (circular reveal from toggle) ---- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
