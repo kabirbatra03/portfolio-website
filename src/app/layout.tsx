@@ -26,7 +26,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const siteName = `${profile.name} Portfolio`;
 const description =
   "Senior software engineer with 4+ years building web applications, component systems, and micro-frontend platforms with React and Next.js.";
-const socialPreviewImage = "/og-live.png";
+const socialPreviewImage = "/og-live.png?v=2";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
