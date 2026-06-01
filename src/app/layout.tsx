@@ -25,7 +25,7 @@ const serif = Spectral({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const siteName = `${profile.name} Portfolio`;
 const description =
-  "Senior software engineer with 4+ years building web applications, component systems, and micro-frontend platforms with React and Next.js.";
+  "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms. Specializing in React.js, Next.js, TypeScript, frontend system design and some experience in microservices. Beyond the core stack, I've worked across product design, game development, 3D animations, graphic design, and built AI/ML projects long before LLMs were cool.";
 const socialPreviewImage = "/og-live.png?v=2";
 
 export const metadata: Metadata = {
