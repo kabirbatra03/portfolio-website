@@ -36,7 +36,7 @@ export function Hero() {
     const updateViews = async () => {
       try {
         const response = await fetch("/api/views", {
-          method: "GET",
+          method: "POST",
           cache: "no-store",
           signal: controller.signal,
         });
