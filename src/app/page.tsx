@@ -34,10 +34,7 @@ export default function Home() {
 
       {/* CRT phosphor bloom + scanlines, above content, never blocking input */}
       <div className="crt-bloom pointer-events-none fixed inset-0 z-40" aria-hidden />
-      <div
-        className="crt-overlay pointer-events-none fixed inset-0 z-40 opacity-[0.35]"
-        aria-hidden
-      />
+      <div className="crt-overlay pointer-events-none fixed inset-0 z-40 opacity-[0.35]" aria-hidden />
     </div>
   );
 }

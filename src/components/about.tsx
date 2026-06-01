@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  EnvelopeSimple,
-  FileText,
-  GithubLogo,
-  LinkedinLogo,
-  Phone,
-  XLogo,
-  type Icon,
-} from "@phosphor-icons/react";
+import { EnvelopeSimple, FileText, GithubLogo, LinkedinLogo, Phone, XLogo, type Icon } from "@phosphor-icons/react";
 
 import { profile, socials } from "@/lib/data";
 import { Heading, Kicker, Section } from "./decor";
@@ -32,10 +24,7 @@ export function About() {
         <ul className="mt-6 space-y-3.5 text-[0.92rem] leading-relaxed text-muted">
           {profile.tagline.map((line, i) => (
             <li key={i} className="flex gap-3">
-              <span
-                aria-hidden
-                className="mt-2 size-1.5 shrink-0 bg-accent/70"
-              />
+              <span aria-hidden className="mt-2 size-1.5 shrink-0 bg-accent/70" />
               <span>{line}</span>
             </li>
           ))}
@@ -44,7 +33,6 @@ export function About() {
     </Section>
   );
 }
-
 export function Connect() {
   return (
     <Section>
@@ -63,11 +51,7 @@ export function Connect() {
                 className="group inline-flex items-center gap-2 border border-line px-3 py-2 text-xs text-muted transition-[color,border-color,transform] duration-150 ease-out hover:border-accent/50 hover:text-fg active:scale-[0.97]"
               >
                 {Glyph && (
-                  <Glyph
-                    size={14}
-                    weight="bold"
-                    className="text-faint transition-colors group-hover:text-accent"
-                  />
+                  <Glyph size={14} weight="bold" className="text-faint transition-colors group-hover:text-accent" />
                 )}
                 {label}
               </a>
