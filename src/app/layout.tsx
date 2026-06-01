@@ -26,6 +26,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const siteName = `${profile.name} Portfolio`;
 const description =
   "Senior software engineer with 4+ years building web applications, component systems, and micro-frontend platforms with React and Next.js.";
+const socialPreviewImage = "/og-live.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -46,18 +47,20 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/opengraph-image",
+        url: socialPreviewImage,
         width: 1200,
         height: 630,
-        alt: `${profile.name} portfolio cover image`,
+        alt: `${profile.name} portfolio website preview`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@KabirBatra_",
+    creator: "@KabirBatra_",
     title: `${profile.name}, Senior Frontend Engineer`,
     description,
-    images: ["/opengraph-image"],
+    images: [socialPreviewImage],
   },
   robots: {
     index: true,
