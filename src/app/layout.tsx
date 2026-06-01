@@ -26,7 +26,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kabir-batra.com
 const siteName = `${profile.name} Portfolio`;
 const description =
   "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms.";
-const socialPreviewImage = "/og-live-large.png?v=1";
+const socialPreviewImage = "/og-live-large.png?v=2";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
