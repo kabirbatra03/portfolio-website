@@ -25,7 +25,7 @@ const serif = Spectral({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kabir-batra.com";
 const siteName = `${profile.name} Portfolio`;
 const description =
-  "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms. Specializing in React.js, Next.js, TypeScript, frontend system design and some experience in microservices. Beyond the core stack, I've worked across product design, game development, 3D animations, graphic design, and built AI/ML projects long before LLMs were cool.";
+  "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms.";
 const socialPreviewImage = "/og-live-large.png?v=1";
 
 export const metadata: Metadata = {
@@ -34,6 +34,22 @@ export const metadata: Metadata = {
     default: `${profile.name}, Senior Frontend Engineer`,
     template: `%s | ${siteName}`,
   },
+  keywords: [
+    "Kabir Batra",
+    "Senior Software Engineer",
+    "React.js",
+    "Next.js",
+    "TypeScript",
+    "frontend system design",
+    "microfrontend",
+    "microservices",
+    "product design",
+    "game development",
+    "3D animations",
+    "graphic design",
+    "AI/ML",
+    "LLMs",
+  ],
   description,
   alternates: {
     canonical: "/",
