@@ -18,37 +18,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "kabir-batra.com",
-          },
-        ],
-        destination: "https://www.kabir-batra.com/:path*",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.kabir-batra.com",
-          },
-          {
-            type: "header",
-            key: "x-forwarded-proto",
-            value: "http",
-          },
-        ],
-        destination: "https://www.kabir-batra.com/:path*",
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     return [
       {
