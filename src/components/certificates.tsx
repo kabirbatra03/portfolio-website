@@ -1,6 +1,6 @@
 "use client";
 
-import { certificates } from "@/lib/data";
+import { awards, certificates } from "@/lib/data";
 import { Heading, Kicker, Section } from "./decor";
 import { Reveal } from "./motion";
 
@@ -54,6 +54,26 @@ export function CertificatesSection() {
           <div className="border-t border-line-soft pt-5">
             <GroupLabel>Udemy</GroupLabel>
             <CertificateList items={udemy} />
+          </div>
+
+          <div className="border-t border-line-soft pt-5">
+            <GroupLabel>Recognition</GroupLabel>
+            <ul className="mt-2.5 space-y-2">
+              {awards.map((award) => (
+                <li
+                  key={`${award.title}-${award.year}`}
+                  className="flex items-baseline justify-between gap-3 text-sm"
+                >
+                  <span className="text-fg">
+                    {award.title}
+                    <span className="text-faint"> · {award.org}</span>
+                  </span>
+                  <span className="shrink-0 text-[11px] text-faint">
+                    {award.year}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Reveal>

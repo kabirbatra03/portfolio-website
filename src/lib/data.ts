@@ -22,6 +22,7 @@ export const profile = {
 
 export const socials = [
   { label: "GitHub", href: "https://github.com/kabirbatra03", icon: "github" },
+  { label: "X", href: "https://x.com/KabirBatra_", icon: "x" },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/kabir-batra-b60004129/",
@@ -29,7 +30,6 @@ export const socials = [
   },
   { label: "Mail", href: `mailto:${profile.email}`, icon: "mail" },
   { label: "Phone", href: "tel:+918605406561", icon: "phone" },
-  { label: "Resume", href: "/resume.pdf", icon: "file" },
 ] as const;
 
 export type Project = {
@@ -169,7 +169,7 @@ export const publications: Publication[] = [
   {
     title: "Intelligent Negotiation Bot",
     description:
-      "A machine-learning bot for business negotiations, designed to engage customers and reach a win-win outcome for both parties.",
+      "A machine-learning bot for business negotiations, designed to engage customers and reach a win-win outcome for both parties. In this research, we proposed a three-layer architecture where the bot is initially provided with product descriptions and target selling ranges to understand product context and weigh pros and cons. The second layer focuses on intent classification and sentiment analysis throughout buyer–seller conversations, allowing the system to understand negotiation tone, buyer interest, and buyer's bargaining power. The third layer handles dynamic price bidding and counter-bidding strategies for offer settlement, adapting negotiation behavior based on contextual reasoning.\n\nThe framework was developed using Python, Scikit-learn, TensorFlow, and NLTK, where multiple machine learning algorithms including KNN, SVM, NN, and ANN were evaluated across different layers of the system, and the models with the best accuracy and performance metrics were selected for deployment",
     links: [
       {
         label: "IEEE",

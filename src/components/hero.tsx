@@ -78,7 +78,10 @@ export function Hero() {
           </motion.h1>
           <motion.p {...fade(0.24)} className="mt-2 text-sm text-muted">
             <span className="text-accent">{profile.role}</span>
-            <span className="cursor-blink ml-px text-accent">_</span>
+            <span
+              aria-hidden
+              className="cursor-blink ml-0.5 inline-block h-[1em] w-[0.6ch] translate-y-[0.08em] rounded-[1px] bg-accent align-baseline"
+            />
           </motion.p>
           <motion.p {...fade(0.3)} className="mt-1.5 inline-flex items-center gap-1.5 text-xs text-faint">
             <MapPin size={13} weight="fill" className="text-accent-dim" />

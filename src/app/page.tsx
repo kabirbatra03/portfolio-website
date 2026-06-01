@@ -26,8 +26,8 @@ export default function Home() {
           <ExperienceSection />
           <Projects />
           <PublicationsSection />
-          <CertificatesSection />
           <Background />
+          <CertificatesSection />
           <Closing />
         </main>
       </div>
