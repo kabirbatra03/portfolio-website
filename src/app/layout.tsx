@@ -26,7 +26,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kabir-batra.com
 const siteName = `${profile.name} Portfolio`;
 const description =
   "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms. Specializing in React.js, Next.js, TypeScript, frontend system design and some experience in microservices. Beyond the core stack, I've worked across product design, game development, 3D animations, graphic design, and built AI/ML projects long before LLMs were cool.";
-const socialPreviewImage = "/og-live.png?v=2";
+const socialPreviewImage = "/og-live-large.png?v=1";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: socialPreviewImage,
-        width: 1200,
-        height: 630,
+        width: 2400,
+        height: 1260,
         alt: `${profile.name} portfolio website preview`,
       },
     ],
@@ -60,7 +60,14 @@ export const metadata: Metadata = {
     creator: "@KabirBatra_",
     title: `${profile.name}, Senior Frontend Engineer`,
     description,
-    images: [socialPreviewImage],
+    images: [
+      {
+        url: socialPreviewImage,
+        width: 2400,
+        height: 1260,
+        alt: `${profile.name} portfolio website preview`,
+      },
+    ],
   },
   robots: {
     index: true,
