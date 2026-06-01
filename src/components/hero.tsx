@@ -31,7 +31,6 @@ export function Hero() {
   useEffect(() => {
     const controller = new AbortController();
     let mounted = true;
-    let timer: ReturnType<typeof setTimeout> | undefined;
 
     const updateViews = async () => {
       try {
@@ -58,16 +57,14 @@ export function Hero() {
       }
     };
 
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       void updateViews();
     }, 200);
 
     return () => {
       mounted = false;
       controller.abort();
-      if (timer) {
-        clearTimeout(timer);
-      }
+      clearTimeout(timer);
     };
   }, []);
 
@@ -90,17 +87,12 @@ export function Hero() {
           </span>
           {profile.available ? "Open to opportunities" : "Heads down"}
         </span>
-        <span className="inline-flex items-center gap-1.5 text-faint">
-          <Eye size={13} weight="bold" />
-          {isViewsLoading ? (
-            <span
-              aria-hidden
-              className={`inline-block h-3 w-16 rounded-sm bg-line-soft ${reduce ? "" : "animate-pulse"}`}
-            />
-          ) : (
-            views.toLocaleString()
-          )}
-        </span>
+        {!isViewsLoading ? (
+          <span className="inline-flex items-center gap-1.5 text-faint">
+            <Eye size={13} weight="bold" />
+            {views.toLocaleString()}
+          </span>
+        ) : null}
       </motion.div>
 
       {/* dotted blueprint plate */}
