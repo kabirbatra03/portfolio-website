@@ -31,7 +31,7 @@ const socialPreviewImage = "/og-live-large.png?v=1";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name}, Senior Frontend Engineer`,
+    default: `${profile.name}, Senior Software Engineer`,
     template: `%s | ${siteName}`,
   },
   keywords: [
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName,
-    title: `${profile.name}, Senior Frontend Engineer`,
+    title: `${profile.name}, Senior Software Engineer`,
     description,
     images: [
       {
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@KabirBatra_",
     creator: "@KabirBatra_",
-    title: `${profile.name}, Senior Frontend Engineer`,
+    title: `${profile.name}, Senior Software Engineer`,
     description,
     images: [
       {
