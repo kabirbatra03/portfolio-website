@@ -3,6 +3,7 @@
 import { MapPin, Eye } from "@phosphor-icons/react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 
 import { profile } from "@/lib/data";
 import { Crosshair, Section } from "./decor";
@@ -24,6 +25,41 @@ const EASE = [0.23, 1, 0.32, 1] as const;
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const [views, setViews] = useState<number>(profile.views);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let mounted = true;
+
+    const updateViews = async () => {
+      try {
+        const response = await fetch("/api/views", {
+          method: "POST",
+          cache: "no-store",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = (await response.json()) as { views?: number };
+        if (mounted && typeof payload.views === "number") {
+          setViews(payload.views);
+        }
+      } catch {
+        // Keep the static fallback from profile.views when unavailable.
+      }
+    };
+
+    void updateViews();
+
+    return () => {
+      mounted = false;
+      controller.abort();
+    };
+  }, []);
+
   const fade = (delay: number) =>
     reduce
       ? {}
@@ -45,7 +81,7 @@ export function Hero() {
         </span>
         <span className="inline-flex items-center gap-1.5 text-faint">
           <Eye size={13} weight="bold" />
-          {profile.views.toLocaleString()}
+          {views.toLocaleString()}
         </span>
       </motion.div>
 

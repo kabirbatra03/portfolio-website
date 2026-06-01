@@ -1,0 +1,19 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-portfolio",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".open-next/assets"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "VIEWS",
+			"id": "407e9c7308ca4ceabde80552fe10652c"
+		}
+	]
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, JetBrains_Mono, Spectral } from "next/font/google";
+import { profile, socials } from "@/lib/data";
 import "./globals.css";
 
 const display = Archivo({
@@ -21,13 +22,70 @@ const serif = Spectral({
   style: ["italic"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteName = `${profile.name} Portfolio`;
+const description =
+  "Senior software engineer with 4+ years building web applications, component systems, and micro-frontend platforms with React and Next.js.";
+
 export const metadata: Metadata = {
-  title: "Kabir Batra, Senior Frontend Engineer",
-  description:
-    "Senior software engineer with 4+ years building web applications, component systems, and micro-frontend platforms with React and Next.js.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${profile.name}, Senior Frontend Engineer`,
+    template: `%s | ${siteName}`,
+  },
+  description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName,
+    title: `${profile.name}, Senior Frontend Engineer`,
+    description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `${profile.name} portfolio cover image`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name}, Senior Frontend Engineer`,
+    description,
+    images: ["/opengraph-image"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const themeInit = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}})();`;
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: profile.location,
+  },
+  url: siteUrl,
+  email: profile.email,
+  sameAs: socials.map((social) => social.href).filter((href) => href.startsWith("https://")),
+};
 
 export default function RootLayout({
   children,
@@ -42,6 +100,7 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       </head>
       <body className="min-h-full">{children}</body>
     </html>

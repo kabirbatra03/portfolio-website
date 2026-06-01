@@ -2,20 +2,21 @@
 
 import { Moon, Sun } from "@phosphor-icons/react";
 import { useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof document === "undefined") return "dark";
+    return (document.documentElement.dataset.theme as Theme) || "dark";
+  });
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const reduce = useReducedMotion();
-
-  useEffect(() => {
-    const current = (document.documentElement.dataset.theme as Theme) || "dark";
-    setTheme(current);
-    setMounted(true);
-  }, []);
 
   function apply(next: Theme) {
     document.documentElement.dataset.theme = next;
