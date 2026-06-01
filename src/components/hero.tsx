@@ -26,15 +26,17 @@ const EASE = [0.23, 1, 0.32, 1] as const;
 export function Hero() {
   const reduce = useReducedMotion();
   const [views, setViews] = useState<number>(profile.views);
+  const [isViewsLoading, setIsViewsLoading] = useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
     let mounted = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
     const updateViews = async () => {
       try {
         const response = await fetch("/api/views", {
-          method: "POST",
+          method: "GET",
           cache: "no-store",
           signal: controller.signal,
         });
@@ -49,14 +51,23 @@ export function Hero() {
         }
       } catch {
         // Keep the static fallback from profile.views when unavailable.
+      } finally {
+        if (mounted) {
+          setIsViewsLoading(false);
+        }
       }
     };
 
-    void updateViews();
+    timer = setTimeout(() => {
+      void updateViews();
+    }, 200);
 
     return () => {
       mounted = false;
       controller.abort();
+      if (timer) {
+        clearTimeout(timer);
+      }
     };
   }, []);
 
@@ -81,7 +92,14 @@ export function Hero() {
         </span>
         <span className="inline-flex items-center gap-1.5 text-faint">
           <Eye size={13} weight="bold" />
-          {views.toLocaleString()}
+          {isViewsLoading ? (
+            <span
+              aria-hidden
+              className={`inline-block h-3 w-16 rounded-sm bg-line-soft ${reduce ? "" : "animate-pulse"}`}
+            />
+          ) : (
+            views.toLocaleString()
+          )}
         </span>
       </motion.div>
 

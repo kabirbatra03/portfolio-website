@@ -1,7 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { profile } from "@/lib/data";
 
-const VIEW_COUNTER_KEY = "portfolio:home:views";
+const INITIAL_VIEW_COUNT = 0;
+const VIEW_COUNTER_KEY = "portfolio:home:views:v3";
 
 type ViewsResponse = {
   views: number;
@@ -18,7 +18,7 @@ function getMemoryStore() {
   };
 
   if (typeof globalWithCounter.__portfolioViewCount !== "number") {
-    globalWithCounter.__portfolioViewCount = profile.views;
+    globalWithCounter.__portfolioViewCount = INITIAL_VIEW_COUNT;
   }
 
   return globalWithCounter;
@@ -29,12 +29,7 @@ async function getViewsStore(): Promise<KVLike | null> {
     const { env } = await getCloudflareContext({ async: true });
     const viewsBinding = (env as Record<string, unknown>).VIEWS;
 
-    if (
-      viewsBinding &&
-      typeof viewsBinding === "object" &&
-      "get" in viewsBinding &&
-      "put" in viewsBinding
-    ) {
+    if (viewsBinding && typeof viewsBinding === "object" && "get" in viewsBinding && "put" in viewsBinding) {
       return viewsBinding as KVLike;
     }
   } catch {
@@ -52,18 +47,25 @@ function jsonResponse(payload: ViewsResponse) {
   });
 }
 
-export async function GET() {
-  const store = await getViewsStore();
+function parseCount(rawValue: string | null): number {
+  const parsed = Number.parseInt(rawValue ?? `${INITIAL_VIEW_COUNT}`, 10);
+  return Number.isFinite(parsed) ? parsed : INITIAL_VIEW_COUNT;
+}
 
+async function getCurrentViews(store: KVLike | null): Promise<number> {
   if (!store) {
     const memory = getMemoryStore();
-    return jsonResponse({ views: memory.__portfolioViewCount ?? profile.views });
+    return memory.__portfolioViewCount ?? INITIAL_VIEW_COUNT;
   }
 
   const currentValue = await store.get(VIEW_COUNTER_KEY);
-  const views = Number.parseInt(currentValue ?? `${profile.views}`, 10);
+  return parseCount(currentValue);
+}
 
-  return jsonResponse({ views: Number.isFinite(views) ? views : profile.views });
+export async function GET() {
+  const store = await getViewsStore();
+  const views = await getCurrentViews(store);
+  return jsonResponse({ views });
 }
 
 export async function POST() {
@@ -71,15 +73,12 @@ export async function POST() {
 
   if (!store) {
     const memory = getMemoryStore();
-    memory.__portfolioViewCount = (memory.__portfolioViewCount ?? profile.views) + 1;
-    return jsonResponse({ views: memory.__portfolioViewCount });
+    memory.__portfolioViewCount = (memory.__portfolioViewCount ?? INITIAL_VIEW_COUNT) + 1;
+    return jsonResponse({ views: memory.__portfolioViewCount ?? INITIAL_VIEW_COUNT });
   }
 
-  const currentValue = await store.get(VIEW_COUNTER_KEY);
-  const currentViews = Number.parseInt(currentValue ?? `${profile.views}`, 10);
-  const safeCurrentViews = Number.isFinite(currentViews) ? currentViews : profile.views;
-  const nextViews = safeCurrentViews + 1;
-
+  const currentViews = await getCurrentViews(store);
+  const nextViews = currentViews + 1;
   await store.put(VIEW_COUNTER_KEY, `${nextViews}`);
 
   return jsonResponse({ views: nextViews });

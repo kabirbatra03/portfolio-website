@@ -12,7 +12,7 @@ export const profile = {
   phone: "+91 86054 06561",
   resumeUrl: "/resume.pdf",
   available: true,
-  views: 448,
+  views: 0,
   tagline: [
     "Senior Software Engineer with 4+ years building everything from full-stack SaaS/B2C products to large-scale e-commerce platforms.",
     "Specializing in React, Next.js, TypeScript, and scalable micro-frontend/microservices architecture.",
