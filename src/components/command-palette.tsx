@@ -79,6 +79,10 @@ function Palette({ onClose }: { onClose: () => void }) {
     };
   }, []);
 
+  useEffect(() => {
+    document.getElementById(`${listId}-${activeIndex}`)?.scrollIntoView({ block: "nearest" });
+  }, [listId, activeIndex]);
+
   function run(command: Command) {
     onClose();
     command.run();
