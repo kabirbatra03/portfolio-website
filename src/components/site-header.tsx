@@ -1,9 +1,14 @@
 "use client";
 
+import { useState } from "react";
+
 import { nav, profile } from "@/lib/data";
+import { CommandPalette } from "./command-palette";
 import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
       <div className="flex h-13 items-center justify-between px-5 sm:px-8">
@@ -24,18 +29,22 @@ export function SiteHeader() {
               {item.label}
             </a>
           ))}
-          <span
-            aria-hidden
-            className="ml-2 hidden items-center gap-1 border border-line-soft px-2 py-1 text-[10px] text-faint sm:inline-flex"
+          <button
+            type="button"
+            onClick={() => setPaletteOpen(true)}
+            aria-label="Open command palette"
+            aria-keyshortcuts="Control+K Meta+K"
+            className="ml-2 hidden items-center gap-1 border border-line-soft px-2 py-1 text-[10px] text-faint transition-colors duration-150 ease-out hover:border-accent/50 hover:text-fg sm:inline-flex"
           >
             <kbd className="font-mono">Ctrl</kbd>
             <kbd className="font-mono">K</kbd>
-          </span>
+          </button>
           <span className="ml-1 sm:ml-2">
             <ThemeToggle />
           </span>
         </nav>
       </div>
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
     </header>
   );
 }
