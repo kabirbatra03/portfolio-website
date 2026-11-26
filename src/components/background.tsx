@@ -16,7 +16,7 @@ export function Background() {
   return (
     <Section>
       <Reveal>
-        <Kicker>08 / background</Kicker>
+        <Kicker>07 / background</Kicker>
         <Heading>Background</Heading>
 
         <div className="mt-7 space-y-6">

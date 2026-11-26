@@ -42,7 +42,7 @@ export function CertificatesSection() {
   return (
     <Section id="certificates">
       <Reveal>
-        <Kicker>07 / credentials</Kicker>
+        <Kicker>08 / credentials</Kicker>
         <Heading>Certificates</Heading>
 
         <div className="mt-7 space-y-6">
