@@ -66,6 +66,7 @@ function Palette({ onClose }: { onClose: () => void }) {
   const listId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const restoreFocus = useRef<Element | null>(null);
+  const keyboardNav = useRef(false);
 
   const q = query.trim().toLowerCase();
   const results = q ? commands.filter((c) => c.label.toLowerCase().includes(q)) : commands;
@@ -80,6 +81,9 @@ function Palette({ onClose }: { onClose: () => void }) {
   }, []);
 
   useEffect(() => {
+    // only keyboard moves scroll; scrolling on hover would shift items under the pointer
+    if (!keyboardNav.current) return;
+    keyboardNav.current = false;
     document.getElementById(`${listId}-${activeIndex}`)?.scrollIntoView({ block: "nearest" });
   }, [listId, activeIndex]);
 
@@ -97,9 +101,11 @@ function Palette({ onClose }: { onClose: () => void }) {
       e.preventDefault();
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
+      keyboardNav.current = true;
       setActive((activeIndex + 1) % Math.max(results.length, 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      keyboardNav.current = true;
       setActive((activeIndex - 1 + results.length) % Math.max(results.length, 1));
     } else if (e.key === "Enter" && results[activeIndex]) {
       e.preventDefault();
