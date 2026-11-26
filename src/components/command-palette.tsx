@@ -88,6 +88,9 @@ function Palette({ onClose }: { onClose: () => void }) {
     if (e.key === "Escape") {
       e.preventDefault();
       onClose();
+    } else if (e.key === "Tab") {
+      // the input is the dialog's only focusable element; keep focus trapped in the modal
+      e.preventDefault();
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
       setActive((activeIndex + 1) % Math.max(results.length, 1));
